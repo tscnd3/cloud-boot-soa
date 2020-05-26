@@ -1,7 +1,76 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
+  <parent>
+		<groupId>org.springframework.boot</groupId>
+    	<artifactId>spring-boot-starter-parent</artifactId>
+    	<version>2.1.5.RELEASE</version>
+   </parent>
   <groupId>com.xinyue.cloudboot</groupId>
   <artifactId>cloud-boot-soa</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
+  
+   <modules>
+  	<module>cloud-boot-client</module>
+  	<module>cloud-boot-server</module>
+   </modules>
+  
+  <properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<java.version>1.8</java.version>
+		<druid.version>1.1.8</druid.version>
+		<maven-jar-plugin.version>3.1.1</maven-jar-plugin.version> <!-- 指定 maven插件版本 -->
+		<com.alibaba.cloud>2.1.0.RELEASE</com.alibaba.cloud>
+  </properties>	
+  
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>com.alibaba.cloud</groupId>
+	    		<artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+				<version>${com.alibaba.cloud}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.alibaba.cloud</groupId>
+	    		<artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
+	    		<version>${com.alibaba.cloud}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>	
+  
+  <build> 
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-source-plugin</artifactId>
+                <configuration>
+                    <attach>true</attach>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            
+            <plugin>
+			    <groupId>org.apache.maven.plugins</groupId>
+			    <artifactId>maven-surefire-plugin</artifactId>
+			    <configuration>
+			        <skipTests>true</skipTests>
+			    </configuration>
+			</plugin>
+        </plugins>
+    </build>
+ 
 </project>
