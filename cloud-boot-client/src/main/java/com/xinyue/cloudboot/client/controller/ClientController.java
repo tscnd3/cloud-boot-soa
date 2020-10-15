@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.xinyue.cloudboot.client.interfaces.ClientService;
 
 @RestController
@@ -22,6 +23,7 @@ public class ClientController {
 	@Autowired
 	private RestTemplate restTemplate;
 	
+	
 	@GetMapping("/getServiceList") 
 	public List<ServiceInstance> getServiceList() {
 		List<ServiceInstance> serviceInstanceList = discoveryClient.getInstances("cloud-boot-client"); 
@@ -30,8 +32,13 @@ public class ClientController {
 	
 	
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
+	@HystrixCommand(fallbackMethod = "addServiceFallback")
 	public String add(){
 		return restTemplate.getForEntity("http://cloud-boot-server/add?a=10&b=20", String.class).getBody();
+	}
+	
+	public String addServiceFallback(){
+		return"error";
 	}
 	
 	@Autowired
