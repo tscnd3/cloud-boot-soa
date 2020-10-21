@@ -37,6 +37,12 @@ public class ClientController {
 		return restTemplate.getForEntity("http://cloud-boot-server/add?a=10&b=20", String.class).getBody();
 	}
 	
+	@RequestMapping(value = "/createOrder3", method = RequestMethod.GET)
+	public String createOrder3(){
+		return restTemplate.getForEntity("http://micro-mall-integral/increa?userId=10&integral=20", String.class).getBody();
+	}
+	
+	
 	public String addServiceFallback(){
 		return"error";
 	}
